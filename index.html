@@ -45,7 +45,7 @@
             background: #ffffff;
             border: 1px solid #cbd5e1;
             padding: 8px 12px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: bold;
             color: #2c3e50;
             width: 100%;
@@ -53,14 +53,16 @@
             outline: none;
             cursor: pointer;
             text-align: center;
+            font-family: 'Traditional Arabic', Arial, sans-serif;
         }
         .arabic-sub {
-            font-size: 14px;
-            color: #555;
+            font-size: 15px;
+            color: #334155;
             margin-top: 12px;
             text-align: center;
-            font-weight: 500;
+            font-weight: bold;
             padding: 0 15px;
+            font-family: 'Traditional Arabic', Arial, sans-serif;
         }
         /* Top Action Icons Bar */
         .action-bar {
@@ -163,21 +165,21 @@
 <body>
 
     <div id="appContainer">
-        <!-- Separate Selectors for Zikr and Target -->
+        <!-- Separate Selectors for Zikr (Arabic) and Target -->
         <div class="selector-box">
-            <!-- Zikr Dropdown -->
+            <!-- Arabic Zikr Dropdown -->
             <select id="zikrSelect" onchange="updateZikrText()">
-                <option value="أَسْتَغْفِرُ اللَّهَ">Astagfirullah</option>
-                <option value="سُبْحَانَ اللَّهِ">Subhana Allah</option>
-                <option value="اللَّهُ أَكْبَرُ">Allahu Akbar</option>
-                <option value="لَا إِلَهَ إِلَّا اللَّهُ">La ilaha illa allah</option>
-                <option value="لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ">La ilaha illa anta subha naka inni kuntu minaj jalimin</option>
-                <option value="حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ">Hasbu na allahu nimal wakil</option>
-                <option value="صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ">Salla allahu alaihi wa sallam</option>
-                <option value="سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ">Sub ha nallahi wa biham dihi subha na allahil ajim</option>
-                <option value="سُبْحَانَ اللَّهِ وَبِحَمْدِهِ">Subha allahi wa biham dihi</option>
-                <option value="لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ">La haula wa la quwwata illa billah</option>
-                <option value="اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ">Allahumma salli ala Muhammad</option>
+                <option value="أَسْتَغْفِرُ اللَّهَ">أَسْتَغْفِرُ اللَّهَ (Astagfirullah)</option>
+                <option value="سُبْحَانَ اللَّهِ">سُبْحَانَ اللَّهِ (Subhana Allah)</option>
+                <option value="اللَّهُ أَكْبَرُ">اللَّهُ أَكْبَرُ (Allahu Akbar)</option>
+                <option value="لَا إِلَهَ إِلَّا اللَّهُ">لَا إِلَهَ إِلَّا اللَّهُ (La ilaha illa allah)</option>
+                <option value="لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ">لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ</option>
+                <option value="حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ">حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ (Hasbunallah)</option>
+                <option value="صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ">صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ (Darood)</option>
+                <option value="سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ</option>
+                <option value="سُبْحَانَ اللَّهِ وَبِحَمْدِهِ">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</option>
+                <option value="لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ">لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ (Hawqala)</option>
+                <option value="اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ">اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ (Salawat)</option>
             </select>
 
             <!-- Target Count Dropdown -->
@@ -189,7 +191,7 @@
             </select>
         </div>
 
-        <div class="arabic-sub" id="zikrMeaning">আল্লাহ মহান! সমস্ত প্রশংসা আল্লাহর জন্য।</div>
+        <div class="arabic-sub" id="zikrMeaning">أَسْتَغْفِرُ اللَّهَ</div>
 
         <!-- Action Icons (Settings, Reset, Sound) -->
         <div class="action-bar">
@@ -255,8 +257,9 @@
         }
 
         function resetCounter() {
-            if (confirm("Apni ki current count reset korte chan?")) {
+            if (confirm("Apni ki boro count ebong sorbomoto (total) duitai reset korte chan?")) {
                 currentCount = 0;
+                totalCount = 0; // Duitai eksathe zero hoye jabe
                 updateDisplay();
             }
         }
@@ -279,8 +282,7 @@
         }
 
         function updateZikrText() {
-            // Can update meaning description based on selected zikr if needed
-            zikrMeaning.innerText = "নির্বাচিত জিকির: " + zikrSelect.value;
+            zikrMeaning.innerText = zikrSelect.value;
             currentCount = 0;
             updateDisplay();
         }
@@ -298,7 +300,7 @@
         }
 
         function openSettings() {
-            let action = prompt("Type 'resetall' to clear total count.");
+            let action = prompt("Type 'resetall' to clear counts.");
             if (action === 'resetall') {
                 totalCount = 0;
                 currentCount = 0;
