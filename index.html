@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Tasbih App</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #eef2f7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            touch-action: manipulation;
+        }
+        #appContainer {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            background: #eef2f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            padding: 20px;
+        }
+        /* Top Dropdown / Zikr Selector */
+        .zikr-header {
+            background: #d4e0ec;
+            width: 90%;
+            padding: 12px 20px;
+            border-radius: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        .zikr-header select {
+            background: transparent;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            width: 100%;
+            outline: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        .arabic-sub {
+            font-size: 14px;
+            color: #555;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+        /* Top Action Icons Bar */
+        .action-bar {
+            display: flex;
+            gap: 30px;
+            margin-top: 25px;
+        }
+        .icon-btn {
+            background: #e2e8f0;
+            border: 2px solid #cbd5e1;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: 0.1s;
+        }
+        .icon-btn:active {
+            transform: scale(0.92);
+            background: #cbd5e1;
+        }
+        /* Main Counter Circle Area */
+        .counter-section {
+            position: relative;
+            margin-top: 40px;
+            width: 260px;
+            height: 260px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .ring-svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        .ring-bg {
+            fill: none;
+            stroke: #d0dbe7;
+            stroke-width: 12;
+        }
+        .ring-progress {
+            fill: none;
+            stroke: #3b82f6;
+            stroke-width: 12;
+            stroke-dasharray: 754;
+            stroke-dashoffset: 754;
+            transition: stroke-dashoffset 0.2s ease;
+            stroke-linecap: round;
+        }
+        .counter-display {
+            z-index: 2;
+            font-size: 65px;
+            font-weight: bold;
+            color: #1e293b;
+        }
+        /* Total Box (Sorbomoto) */
+        .total-container {
+            position: absolute;
+            bottom: 70px;
+            right: 35px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .total-circle {
+            width: 60px;
+            height: 60px;
+            border: 3px solid #cbd5e1;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #334155;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .total-box-label {
+            margin-top: 6px;
+            background: #fff;
+            padding: 3px 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #475569;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="appContainer">
+        <!-- Zikr / Target Selection Header -->
+        <div class="zikr-header">
+            <select id="targetSelect" onchange="changeTarget()">
+                <option value="11">Subhanallah (Target: 11)</option>
+                <option value="33">Alhamdulillah (Target: 33)</option>
+                <option value="100" selected>Allahu Akbar (Target: 100)</option>
+                <option value="custom">Custom Target</option>
+            </select>
+        </div>
+
+        <div class="arabic-sub" id="zikrText">আল্লাহ মহান! সমস্ত প্রশংসা আল্লাহর জন্য।</div>
+
+        <!-- Action Icons (Settings, Reset, Sound) -->
+        <div class="action-bar">
+            <div class="icon-btn" onclick="openSettings()" title="Settings">⚙️</div>
+            <div class="icon-btn" onclick="resetCounter()" title="Reset">🔄</div>
+            <div class="icon-btn" onclick="toggleSound()" title="Sound">🔊</div>
+        </div>
+
+        <!-- Main Clickable Ring Counter -->
+        <div class="counter-section" onclick="incrementCount()">
+            <svg class="ring-svg" viewBox="0 0 260 260">
+                <circle class="ring-bg" cx="130" cy="130" r="120"></circle>
+                <circle id="progressRing" class="ring-progress" cx="130" cy="130" r="120"></circle>
+            </svg>
+            <div class="counter-display" id="currentCount">0</div>
+        </div>
+
+        <!-- Sorbomoto (Total Counter) Box like screenshot -->
+        <div class="total-container">
+            <div class="total-circle" id="totalCountDisplay">0</div>
+            <div class="total-box-label">সর্বমোট: <span id="totalTextNum">0</span></div>
+        </div>
+    </div>
+
+    <script>
+        let currentCount = 0;
+        let totalCount = 0;
+        let targetLimit = 100;
+        let soundEnabled = true;
+
+        const currentCountElem = document.getElementById('currentCount');
+        const totalCountDisplay = document.getElementById('totalCountDisplay');
+        const totalTextNum = document.getElementById('totalTextNum');
+        const progressRing = document.getElementById('progressRing');
+        const targetSelect = document.getElementById('targetSelect');
+        const zikrText = document.getElementById('zikrText');
+
+        const circumference = 2 * Math.PI * 120; // Radius = 120
+        progressRing.style.strokeDasharray = circumference;
+
+        function updateDisplay() {
+            currentCountElem.innerText = currentCount;
+            totalCountDisplay.innerText = totalCount;
+            totalTextNum.innerText = totalCount;
+
+            // Update Progress Ring
+            let progress = currentCount / targetLimit;
+            if (progress > 1) progress = 1;
+            let offset = circumference - (progress * circumference);
+            progressRing.style.strokeDashoffset = offset;
+        }
+
+        function incrementCount() {
+            currentCount++;
+            totalCount++;
+
+            playSound();
+
+            // Check if target is completed
+            if (currentCount >= targetLimit) {
+                // Flash or alert can be added, current count resets for next round while total keeps accumulating
+                currentCount = 0; 
+            }
+
+            updateDisplay();
+        }
+
+        function resetCounter() {
+            if (confirm("Apni ki current count reset korte chan?")) {
+                currentCount = 0;
+                updateDisplay();
+            }
+        }
+
+        function changeTarget() {
+            let val = targetSelect.value;
+            if (val === 'custom') {
+                let customVal = prompt("Enter your custom target number:", "50");
+                if (customVal && !isNaN(customVal)) {
+                    targetLimit = parseInt(customVal);
+                } else {
+                    targetLimit = 100;
+                    targetSelect.value = "100";
+                }
+            } else {
+                targetLimit = parseInt(val);
+            }
+            currentCount = 0;
+            updateDisplay();
+        }
+
+        function playSound() {
+            if (!soundEnabled) return;
+            // Simple short vibration or audio click simulation
+            if (navigator.vibrate) {
+                navigator.vibrate(40);
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            alert(soundEnabled ? "Sound & Vibration Enabled" : "Sound & Vibration Disabled");
+        }
+
+        function openSettings() {
+            let action = prompt("Type 'resetall' to clear total count, or choose target from dropdown.");
+            if (action === 'resetall') {
+                totalCount = 0;
+                currentCount = 0;
+                updateDisplay();
+            }
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>
