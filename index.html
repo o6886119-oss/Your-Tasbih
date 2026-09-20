@@ -29,26 +29,27 @@
             box-sizing: border-box;
             padding: 20px;
         }
-        /* Top Dropdown / Zikr Selector */
-        .zikr-header {
+        /* Dropdown Selectors Area */
+        .selector-box {
             background: #d4e0ec;
             width: 90%;
-            padding: 12px 20px;
-            border-radius: 25px;
+            padding: 10px 15px;
+            border-radius: 20px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            margin-top: 15px;
-            cursor: pointer;
+            margin-top: 10px;
         }
-        .zikr-header select {
-            background: transparent;
-            border: none;
-            font-size: 16px;
+        .selector-box select {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 8px 12px;
+            font-size: 15px;
             font-weight: bold;
             color: #2c3e50;
             width: 100%;
+            border-radius: 12px;
             outline: none;
             cursor: pointer;
             text-align: center;
@@ -56,27 +57,28 @@
         .arabic-sub {
             font-size: 14px;
             color: #555;
-            margin-top: 15px;
+            margin-top: 12px;
             text-align: center;
             font-weight: 500;
+            padding: 0 15px;
         }
         /* Top Action Icons Bar */
         .action-bar {
             display: flex;
-            gap: 30px;
-            margin-top: 25px;
+            gap: 25px;
+            margin-top: 20px;
         }
         .icon-btn {
             background: #e2e8f0;
             border: 2px solid #cbd5e1;
-            width: 50px;
-            height: 50px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 18px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.05);
             transition: 0.1s;
         }
@@ -87,9 +89,9 @@
         /* Main Counter Circle Area */
         .counter-section {
             position: relative;
-            margin-top: 40px;
-            width: 260px;
-            height: 260px;
+            margin-top: 30px;
+            width: 250px;
+            height: 250px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -111,47 +113,47 @@
             fill: none;
             stroke: #3b82f6;
             stroke-width: 12;
-            stroke-dasharray: 754;
-            stroke-dashoffset: 754;
+            stroke-dasharray: 722;
+            stroke-dashoffset: 722;
             transition: stroke-dashoffset 0.2s ease;
             stroke-linecap: round;
         }
         .counter-display {
             z-index: 2;
-            font-size: 65px;
+            font-size: 60px;
             font-weight: bold;
             color: #1e293b;
         }
         /* Total Box (Sorbomoto) */
         .total-container {
             position: absolute;
-            bottom: 70px;
-            right: 35px;
+            bottom: 60px;
+            right: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         .total-circle {
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             border: 3px solid #cbd5e1;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #334155;
             background: #fff;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
         .total-box-label {
-            margin-top: 6px;
+            margin-top: 5px;
             background: #fff;
-            padding: 3px 10px;
+            padding: 3px 8px;
             border: 1px solid #cbd5e1;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             color: #475569;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
@@ -161,17 +163,33 @@
 <body>
 
     <div id="appContainer">
-        <!-- Zikr / Target Selection Header -->
-        <div class="zikr-header">
+        <!-- Separate Selectors for Zikr and Target -->
+        <div class="selector-box">
+            <!-- Zikr Dropdown -->
+            <select id="zikrSelect" onchange="updateZikrText()">
+                <option value="أَسْتَغْفِرُ اللَّهَ">Astagfirullah</option>
+                <option value="سُبْحَانَ اللَّهِ">Subhana Allah</option>
+                <option value="اللَّهُ أَكْبَرُ">Allahu Akbar</option>
+                <option value="لَا إِلَهَ إِلَّا اللَّهُ">La ilaha illa allah</option>
+                <option value="لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ">La ilaha illa anta subha naka inni kuntu minaj jalimin</option>
+                <option value="حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ">Hasbu na allahu nimal wakil</option>
+                <option value="صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ">Salla allahu alaihi wa sallam</option>
+                <option value="سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ">Sub ha nallahi wa biham dihi subha na allahil ajim</option>
+                <option value="سُبْحَانَ اللَّهِ وَبِحَمْدِهِ">Subha allahi wa biham dihi</option>
+                <option value="لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ">La haula wa la quwwata illa billah</option>
+                <option value="اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ">Allahumma salli ala Muhammad</option>
+            </select>
+
+            <!-- Target Count Dropdown -->
             <select id="targetSelect" onchange="changeTarget()">
-                <option value="11">Subhanallah (Target: 11)</option>
-                <option value="33">Alhamdulillah (Target: 33)</option>
-                <option value="100" selected>Allahu Akbar (Target: 100)</option>
+                <option value="11">Target: 11</option>
+                <option value="33">Target: 33</option>
+                <option value="100" selected>Target: 100</option>
                 <option value="custom">Custom Target</option>
             </select>
         </div>
 
-        <div class="arabic-sub" id="zikrText">আল্লাহ মহান! সমস্ত প্রশংসা আল্লাহর জন্য।</div>
+        <div class="arabic-sub" id="zikrMeaning">আল্লাহ মহান! সমস্ত প্রশংসা আল্লাহর জন্য।</div>
 
         <!-- Action Icons (Settings, Reset, Sound) -->
         <div class="action-bar">
@@ -182,14 +200,14 @@
 
         <!-- Main Clickable Ring Counter -->
         <div class="counter-section" onclick="incrementCount()">
-            <svg class="ring-svg" viewBox="0 0 260 260">
-                <circle class="ring-bg" cx="130" cy="130" r="120"></circle>
-                <circle id="progressRing" class="ring-progress" cx="130" cy="130" r="120"></circle>
+            <svg class="ring-svg" viewBox="0 0 250 250">
+                <circle class="ring-bg" cx="125" cy="125" r="110"></circle>
+                <circle id="progressRing" class="ring-progress" cx="125" cy="125" r="110"></circle>
             </svg>
             <div class="counter-display" id="currentCount">0</div>
         </div>
 
-        <!-- Sorbomoto (Total Counter) Box like screenshot -->
+        <!-- Sorbomoto (Total Counter) Box -->
         <div class="total-container">
             <div class="total-circle" id="totalCountDisplay">0</div>
             <div class="total-box-label">সর্বমোট: <span id="totalTextNum">0</span></div>
@@ -207,9 +225,11 @@
         const totalTextNum = document.getElementById('totalTextNum');
         const progressRing = document.getElementById('progressRing');
         const targetSelect = document.getElementById('targetSelect');
-        const zikrText = document.getElementById('zikrText');
+        const zikrSelect = document.getElementById('zikrSelect');
+        const zikrMeaning = document.getElementById('zikrMeaning');
 
-        const circumference = 2 * Math.PI * 120; // Radius = 120
+        const radius = 110;
+        const circumference = 2 * Math.PI * radius;
         progressRing.style.strokeDasharray = circumference;
 
         function updateDisplay() {
@@ -217,7 +237,6 @@
             totalCountDisplay.innerText = totalCount;
             totalTextNum.innerText = totalCount;
 
-            // Update Progress Ring
             let progress = currentCount / targetLimit;
             if (progress > 1) progress = 1;
             let offset = circumference - (progress * circumference);
@@ -227,15 +246,11 @@
         function incrementCount() {
             currentCount++;
             totalCount++;
-
             playSound();
 
-            // Check if target is completed
             if (currentCount >= targetLimit) {
-                // Flash or alert can be added, current count resets for next round while total keeps accumulating
                 currentCount = 0; 
             }
-
             updateDisplay();
         }
 
@@ -249,7 +264,7 @@
         function changeTarget() {
             let val = targetSelect.value;
             if (val === 'custom') {
-                let customVal = prompt("Enter your custom target number:", "50");
+                let customVal = prompt("Enter custom target number:", "50");
                 if (customVal && !isNaN(customVal)) {
                     targetLimit = parseInt(customVal);
                 } else {
@@ -263,9 +278,15 @@
             updateDisplay();
         }
 
+        function updateZikrText() {
+            // Can update meaning description based on selected zikr if needed
+            zikrMeaning.innerText = "নির্বাচিত জিকির: " + zikrSelect.value;
+            currentCount = 0;
+            updateDisplay();
+        }
+
         function playSound() {
             if (!soundEnabled) return;
-            // Simple short vibration or audio click simulation
             if (navigator.vibrate) {
                 navigator.vibrate(40);
             }
@@ -277,7 +298,7 @@
         }
 
         function openSettings() {
-            let action = prompt("Type 'resetall' to clear total count, or choose target from dropdown.");
+            let action = prompt("Type 'resetall' to clear total count.");
             if (action === 'resetall') {
                 totalCount = 0;
                 currentCount = 0;
@@ -285,7 +306,7 @@
             }
         }
 
-        updateDisplay();
+        updateZikrText();
     </script>
 </body>
 </html>
