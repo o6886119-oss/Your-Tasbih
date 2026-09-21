@@ -6,12 +6,15 @@
     <title>Digital Tasbih App - Liquid Glass</title>
     <style>
         * {
-            -webkit-tap-highlight-color: transparent; /* Removes the tap blue/gray box overlay */
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none !important;
+            user-select: none !important;
+            outline: none !important;
         }
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
@@ -25,39 +28,39 @@
             width: 100%;
             max-width: 420px;
             height: 100vh;
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            border-left: 1px solid rgba(255, 255, 255, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border-left: 1px solid rgba(255, 255, 255, 0.25);
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
             box-sizing: border-box;
             padding: 20px;
         }
 
         /* Dropdown Selectors Area - High Liquid Glass */
         .selector-box {
-            background: rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             width: 90%;
             padding: 12px 15px;
             border-radius: 24px;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15), inset 0 1px 1px rgba(255,255,255,0.4);
-            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             margin-top: 10px;
         }
         .selector-box select {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             padding: 10px 12px;
             font-size: 16px;
             font-weight: bold;
@@ -67,12 +70,12 @@
             outline: none;
             cursor: pointer;
             text-align: center;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
             font-family: 'Traditional Arabic', Arial, sans-serif;
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.15);
         }
         .selector-box select option {
-            background: #134e5e;
+            background: #203a43;
             color: #ffffff;
         }
         .arabic-sub {
@@ -82,7 +85,7 @@
             text-align: center;
             font-weight: bold;
             padding: 0 15px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
             font-family: 'Traditional Arabic', Arial, sans-serif;
         }
 
@@ -93,10 +96,10 @@
             margin-top: 20px;
         }
         .icon-btn {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             width: 48px;
             height: 48px;
             border-radius: 50%;
@@ -105,12 +108,12 @@
             align-items: center;
             cursor: pointer;
             font-size: 18px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
             transition: 0.1s;
         }
         .icon-btn:active {
             transform: scale(0.90);
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.3);
         }
 
         /* Main Counter Circle Area with Pure Liquid Glass */
@@ -123,15 +126,12 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            user-select: none;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2), inset 0 5px 15px rgba(255,255,255,0.3);
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 5px 15px rgba(255,255,255,0.25);
         }
         .counter-section:active {
             transform: scale(0.97);
@@ -142,11 +142,11 @@
             width: 100%;
             height: 100%;
             transform: rotate(-90deg);
-            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
         }
         .ring-bg {
             fill: none;
-            stroke: rgba(255, 255, 255, 0.2);
+            stroke: rgba(255, 255, 255, 0.15);
             stroke-width: 12;
         }
         .ring-progress {
@@ -163,7 +163,7 @@
             font-size: 65px;
             font-weight: bold;
             color: #ffffff;
-            text-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            text-shadow: 0 3px 10px rgba(0,0,0,0.4);
         }
 
         /* Total Box (Sorbomoto) with Liquid Glass */
@@ -178,10 +178,10 @@
         .total-circle {
             width: 60px;
             height: 60px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -189,22 +189,22 @@
             font-size: 18px;
             font-weight: bold;
             color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.25);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
         .total-box-label {
             margin-top: 6px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             padding: 4px 10px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 8px;
             font-size: 11px;
             font-weight: bold;
             color: #ffffff;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.25);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -250,7 +250,7 @@
                 <defs>
                     <linearGradient id="liquidGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                         <stop offset="0%" stop-color="#ffffff" />
-                        <stop offset="50%" stop-color="#7dd3fc" />
+                        <stop offset="50%" stop-color="#38bdf8" />
                         <stop offset="100%" stop-color="#0284c7" />
                     </linearGradient>
                 </defs>
