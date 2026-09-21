@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Tasbih App</title>
+    <title>Digital Tasbih App - Liquid Glass</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background: #eef2f7;
+            /* Rich gradient background to make the liquid glass frosted effect pop out */
+            background: linear-gradient(135deg, #a8caba 0%, #5289a7 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
@@ -21,49 +22,69 @@
             width: 100%;
             max-width: 420px;
             height: 100vh;
-            background: #eef2f7;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border-left: 1px solid rgba(255, 255, 255, 0.4);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
             box-sizing: border-box;
             padding: 20px;
         }
+
+        /* iOS Liquid Glass Card Style */
+        .liquid-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.1);
+        }
+
         /* Dropdown Selectors Area */
         .selector-box {
-            background: #d4e0ec;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             width: 90%;
-            padding: 10px 15px;
-            border-radius: 20px;
+            padding: 12px 15px;
+            border-radius: 24px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            gap: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             margin-top: 10px;
         }
         .selector-box select {
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            padding: 8px 12px;
-            font-size: 17px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 10px 12px;
+            font-size: 16px;
             font-weight: bold;
-            color: #2c3e50;
+            color: #1e293b;
             width: 100%;
-            border-radius: 12px;
+            border-radius: 14px;
             outline: none;
             cursor: pointer;
             text-align: center;
             font-family: 'Traditional Arabic', Arial, sans-serif;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.6);
         }
         .arabic-sub {
             font-size: 18px;
-            color: #1e293b;
+            color: #ffffff;
             margin-top: 15px;
             text-align: center;
             font-weight: bold;
             padding: 0 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             font-family: 'Traditional Arabic', Arial, sans-serif;
         }
+
         /* Top Action Icons Bar */
         .action-bar {
             display: flex;
@@ -71,51 +92,60 @@
             margin-top: 20px;
         }
         .icon-btn {
-            background: #e2e8f0;
-            border: 2px solid #cbd5e1;
-            width: 46px;
-            height: 46px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             font-size: 18px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            transition: 0.1s;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: 0.15s;
         }
         .icon-btn:active {
             transform: scale(0.92);
-            background: #cbd5e1;
+            background: rgba(255, 255, 255, 0.4);
         }
-        /* Main Counter Circle Area */
+
+        /* Main Counter Circle Area with Glowing Liquid Ring */
         .counter-section {
             position: relative;
-            margin-top: 25px;
-            width: 250px;
-            height: 250px;
+            margin-top: 30px;
+            width: 260px;
+            height: 260px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             user-select: none;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15), inset 0 5px 15px rgba(255,255,255,0.4);
         }
         .ring-svg {
             position: absolute;
             width: 100%;
             height: 100%;
             transform: rotate(-90deg);
-            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4));
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
         }
         .ring-bg {
             fill: none;
-            stroke: #d0dbe7;
+            stroke: rgba(255, 255, 255, 0.25);
             stroke-width: 12;
         }
         .ring-progress {
             fill: none;
-            stroke: url(#blueGradient);
-            stroke-width: 14;
+            stroke: url(#liquidGradient);
+            stroke-width: 15;
             stroke-dasharray: 722;
             stroke-dashoffset: 722;
             transition: stroke-dashoffset 0.25s ease;
@@ -123,52 +153,59 @@
         }
         .counter-display {
             z-index: 2;
-            font-size: 60px;
+            font-size: 65px;
             font-weight: bold;
-            color: #1e293b;
+            color: #ffffff;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.25);
         }
-        /* Total Box (Sorbomoto) */
+
+        /* Total Box (Sorbomoto) with Liquid Glass */
         .total-container {
             position: absolute;
-            bottom: 60px;
-            right: 30px;
+            bottom: 50px;
+            right: 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         .total-circle {
-            width: 55px;
-            height: 55px;
-            border: 3px solid #cbd5e1;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
-            color: #334155;
-            background: #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
         }
         .total-box-label {
-            margin-top: 5px;
-            background: #fff;
-            padding: 3px 8px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
+            margin-top: 6px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
             font-size: 11px;
             font-weight: bold;
-            color: #475569;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
     </style>
 </head>
 <body>
 
     <div id="appContainer">
-        <!-- Pure Arabic Zikr Dropdown & Target Dropdown -->
+        <!-- Zikr Dropdown & Target Dropdown -->
         <div class="selector-box">
-            <!-- Pure Arabic Zikr Dropdown -->
             <select id="zikrSelect" onchange="updateZikrText()">
                 <option value="أَسْتَغْفِرُ اللَّهَ">أَسْتَغْفِرُ اللَّهَ</option>
                 <option value="سُبْحَانَ اللَّهِ">سُبْحَانَ اللَّهِ</option>
@@ -183,7 +220,6 @@
                 <option value="اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ">اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ</option>
             </select>
 
-            <!-- Target Count Dropdown -->
             <select id="targetSelect" onchange="changeTarget()">
                 <option value="11">Target: 11</option>
                 <option value="33">Target: 33</option>
@@ -194,7 +230,7 @@
 
         <div class="arabic-sub" id="zikrMeaning">أَسْتَغْفِرُ اللَّهَ</div>
 
-        <!-- Action Icons (Settings, Reset, Sound) -->
+        <!-- Action Icons -->
         <div class="action-bar">
             <div class="icon-btn" onclick="openSettings()" title="Settings">⚙️</div>
             <div class="icon-btn" onclick="resetCounter()" title="Reset">🔄</div>
@@ -203,16 +239,16 @@
 
         <!-- Main Clickable Ring Counter -->
         <div class="counter-section" onclick="incrementCount()">
-            <svg class="ring-svg" viewBox="0 0 250 250">
+            <svg class="ring-svg" viewBox="0 0 260 260">
                 <defs>
-                    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#60a5fa" />
-                        <stop offset="50%" stop-color="#3b82f6" />
-                        <stop offset="100%" stop-color="#1d4ed8" />
+                    <linearGradient id="liquidGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ffffff" />
+                        <stop offset="50%" stop-color="#38bdf8" />
+                        <stop offset="100%" stop-color="#0284c7" />
                     </linearGradient>
                 </defs>
-                <circle class="ring-bg" cx="125" cy="125" r="110"></circle>
-                <circle id="progressRing" class="ring-progress" cx="125" cy="125" r="110"></circle>
+                <circle class="ring-bg" cx="130" cy="130" r="110"></circle>
+                <circle id="progressRing" class="ring-progress" cx="130" cy="130" r="110"></circle>
             </svg>
             <div class="counter-display" id="currentCount">0</div>
         </div>
@@ -265,7 +301,7 @@
         }
 
         function resetCounter() {
-            if (confirm("Apni ki boro count ebong sorbomoto (total) duitai reset korte chan?")) {
+            if (confirm("Apni ki current count ebong sorbomoto duitai reset korte chan?")) {
                 currentCount = 0;
                 totalCount = 0;
                 updateDisplay();
@@ -289,14 +325,10 @@
             updateDisplay();
         }
 
-        function updateZikrTextGulo() {
+        function updateZikrText() {
             zikrMeaning.innerText = zikrSelect.value;
             currentCount = 0;
             updateDisplay();
-        }
-
-        function updateZikrText() {
-            updateZikrTextGulo();
         }
 
         function playSound() {
