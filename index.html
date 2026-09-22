@@ -3,363 +3,410 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Tasbih App - Liquid Glass</title>
+    <title>Islamic Liquid Glass App</title>
     <style>
         * {
             -webkit-tap-highlight-color: transparent !important;
-            -webkit-touch-callout: none !important;
             user-select: none !important;
-            outline: none !important;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at 20% 20%, #1e3a8a 0%, #0f172a 50%, #020617 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            touch-action: manipulation;
             overflow: hidden;
+            color: #ffffff;
         }
         #appContainer {
             position: relative;
             width: 100%;
             max-width: 420px;
             height: 100vh;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(60px);
+            -webkit-backdrop-filter: blur(60px);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            border-left: 1px solid rgba(255, 255, 255, 0.25);
-            border-top: 1px solid rgba(255, 255, 255, 0.25);
-            box-sizing: border-box;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 
+                        inset 0 0 0 1.5px rgba(255, 255, 255, 0.25),
+                        inset 0 0 25px rgba(255, 255, 255, 0.1);
             padding: 20px;
+            overflow-y: auto;
         }
 
-        /* Dropdown Selectors Area - High Liquid Glass */
-        .selector-box {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            width: 90%;
-            padding: 12px 15px;
-            border-radius: 24px;
-            display: flex;
+        /* Screen Management */
+        .screen {
+            display: none;
+            width: 100%;
             flex-direction: column;
-            gap: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.3);
+            align-items: center;
+            min-height: 100%;
+        }
+        .screen.active {
+            display: flex;
+        }
+
+        /* Header / Navbar */
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 14px;
+            border-radius: 14px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+        }
+
+        /* Liquid Glass Cards (Dashboard Menu matching screenshot 2) */
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 26px;
+            padding: 22px;
+            width: 100%;
+            margin-bottom: 14px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4), 
+                        inset 0 1px 2px rgba(255,255,255,0.6),
+                        inset 0 -2px 6px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .glass-card:active {
+            transform: scale(0.97);
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        /* Tasbih Counter UI */
+        .counter-display {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+            border: 2px solid rgba(255,255,255,0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            font-weight: bold;
+            margin: 30px 0 20px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 2px 5px rgba(255,255,255,0.4);
+            cursor: pointer;
+        }
+        .tasbih-tools {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .tool-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.5);
+        }
+
+        /* Prayer Tracker Table */
+        .prayer-table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 10px;
         }
-        .selector-box select {
-            background: rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            padding: 10px 12px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffffff;
-            width: 100%;
-            border-radius: 14px;
-            outline: none;
+        .prayer-table th, .prayer-table td {
+            padding: 10px 4px;
+            text-align: center;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .prayer-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: #4ade80;
             cursor: pointer;
-            text-align: center;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-            font-family: 'Traditional Arabic', Arial, sans-serif;
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.15);
-        }
-        .selector-box select option {
-            background: #203a43;
-            color: #ffffff;
-        }
-        .arabic-sub {
-            font-size: 19px;
-            color: #ffffff;
-            margin-top: 15px;
-            text-align: center;
-            font-weight: bold;
-            padding: 0 15px;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-            font-family: 'Traditional Arabic', Arial, sans-serif;
         }
 
-        /* Top Action Icons Bar */
-        .action-bar {
-            display: flex;
-            gap: 25px;
-            margin-top: 20px;
-        }
-        .icon-btn {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 18px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            transition: 0.1s;
-        }
-        .icon-btn:active {
-            transform: scale(0.90);
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Main Counter Circle Area with Pure Liquid Glass */
-        .counter-section {
-            position: relative;
-            margin-top: 35px;
-            width: 260px;
-            height: 260px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 50%;
+        /* Dua & Deeds List Box */
+        .content-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 5px 15px rgba(255,255,255,0.25);
-        }
-        .counter-section:active {
-            transform: scale(0.97);
-            transition: transform 0.1s ease;
-        }
-        .ring-svg {
-            position: absolute;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 12px;
             width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+            text-align: left;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.3);
         }
-        .ring-bg {
-            fill: none;
-            stroke: rgba(255, 255, 255, 0.15);
-            stroke-width: 12;
-        }
-        .ring-progress {
-            fill: none;
-            stroke: url(#liquidGradient);
-            stroke-width: 15;
-            stroke-dasharray: 722;
-            stroke-dashoffset: 722;
-            transition: stroke-dashoffset 0.25s ease;
-            stroke-linecap: round;
-        }
-        .counter-display {
-            z-index: 2;
-            font-size: 65px;
-            font-weight: bold;
-            color: #ffffff;
-            text-shadow: 0 3px 10px rgba(0,0,0,0.4);
-        }
-
-        /* Total Box (Sorbomoto) with Liquid Glass */
-        .total-container {
-            position: absolute;
-            bottom: 50px;
-            right: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .total-circle {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .arabic-text {
             font-size: 18px;
             font-weight: bold;
-            color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            color: #60a5fa;
+            margin-bottom: 6px;
+            text-align: right;
         }
-        .total-box-label {
-            margin-top: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 4px 10px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 8px;
+        .english-meaning {
+            font-size: 13px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 4px;
+        }
+        .source-text {
             font-size: 11px;
-            font-weight: bold;
-            color: #ffffff;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            color: rgba(255,255,255,0.5);
         }
     </style>
 </head>
 <body>
 
     <div id="appContainer">
-        <!-- Zikr Dropdown & Target Dropdown -->
-        <div class="selector-box">
-            <select id="zikrSelect" onchange="updateZikrText()">
-                <option value="أَسْتَغْفِرُ اللَّهَ">أَسْتَغْفِرُ اللَّهَ</option>
-                <option value="سُبْحَانَ اللَّهِ">سُبْحَانَ اللَّهِ</option>
-                <option value="اللَّهُ أَكْبَرُ">اللَّهُ أَكْبَرُ</option>
-                <option value="لَا إِلَهَ إِلَّا اللَّهُ">لَا إِلَهَ إِلَّا اللَّهُ</option>
-                <option value="لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ">لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ</option>
-                <option value="حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ">حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ</option>
-                <option value="صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ">صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ</option>
-                <option value="سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ</option>
-                <option value="سُبْحَانَ اللَّهِ وَبِحَمْدِهِ">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</option>
-                <option value="لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ">لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</option>
-                <option value="اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ">اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ</option>
-            </select>
+        
+        <!-- Dashboard Screen (Matching Screenshot 2 layout & selection) -->
+        <div id="dashboardScreen" class="screen active">
+            <div style="font-size: 24px; font-weight: 800; margin: 25px 0 20px 0; background: linear-gradient(135deg, #60a5fa, #c084fc, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center;">
+                YOUR TASBIH 📿
+            </div>
+            
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 4px;">
+                <div class="glass-card" onclick="showScreen('prayerScreen')">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 24px;">🕌</span>
+                        <div>
+                            <div style="font-size: 17px; font-weight: bold;">Prayer</div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.7);">30 Day Target</div>
+                        </div>
+                    </div>
+                    <span style="font-size: 18px; color: rgba(255,255,255,0.6);">›</span>
+                </div>
 
-            <select id="targetSelect" onchange="changeTarget()">
-                <option value="11">Target: 11</option>
-                <option value="33">Target: 33</option>
-                <option value="100" selected>Target: 100</option>
-                <option value="custom">Custom Target</option>
-            </select>
+                <div class="glass-card" onclick="showScreen('duaScreen')">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 24px;">🤲</span>
+                        <div style="font-size: 17px; font-weight: bold;">Dua</div>
+                    </div>
+                    <span style="font-size: 18px; color: rgba(255,255,255,0.6);">›</span>
+                </div>
+
+                <div class="glass-card" onclick="showScreen('deedsScreen')">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 24px;">❤️</span>
+                        <div style="font-size: 17px; font-weight: bold;">Daily Deeds</div>
+                    </div>
+                    <span style="font-size: 18px; color: rgba(255,255,255,0.6);">›</span>
+                </div>
+
+                <div class="glass-card" onclick="showScreen('tasbihScreen')">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 24px;">📿</span>
+                        <div style="font-size: 17px; font-weight: bold;">Tasbih</div>
+                    </div>
+                    <span style="font-size: 18px; color: rgba(255,255,255,0.6);">›</span>
+                </div>
+            </div>
         </div>
 
-        <div class="arabic-sub" id="zikrMeaning">أَسْتَغْفِرُ اللَّهَ</div>
-
-        <!-- Action Icons -->
-        <div class="action-bar">
-            <div class="icon-btn" onclick="openSettings()" title="Settings">⚙️</div>
-            <div class="icon-btn" onclick="resetCounter()" title="Reset">🔄</div>
-            <div class="icon-btn" onclick="toggleSound()" title="Sound">🔊</div>
+        <!-- Tasbih Screen -->
+        <div id="tasbihScreen" class="screen">
+            <div class="header" style="margin-top: 10px;">
+                <button class="back-btn" onclick="showScreen('dashboardScreen')">← Back</button>
+                <span>Tasbih Counter</span>
+                <div></div>
+            </div>
+            <div style="font-size: 15px; color: #60a5fa; margin-top: 10px; font-weight: bold;">أَسْتَغْفِرُ اللَّهَ</div>
+            <div class="counter-display" id="counterVal" onclick="incrementTasbih()">0</div>
+            <div class="tasbih-tools">
+                <div class="tool-btn" onclick="resetTasbih()" title="Reset">🔄</div>
+                <div class="tool-btn" onclick="triggerVibrate()" title="Vibrate">🔊</div>
+            </div>
         </div>
 
-        <!-- Main Clickable Ring Counter -->
-        <div class="counter-section" onclick="incrementCount()">
-            <svg class="ring-svg" viewBox="0 0 260 260">
-                <defs>
-                    <linearGradient id="liquidGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ffffff" />
-                        <stop offset="50%" stop-color="#38bdf8" />
-                        <stop offset="100%" stop-color="#0284c7" />
-                    </linearGradient>
-                </defs>
-                <circle class="ring-bg" cx="130" cy="130" r="110"></circle>
-                <circle id="progressRing" class="ring-progress" cx="130" cy="130" r="110"></circle>
-            </svg>
-            <div class="counter-display" id="currentCount">0</div>
+        <!-- Prayer Tracker Screen (Matching Screenshot 3 layout with checkmarks) -->
+        <div id="prayerScreen" class="screen">
+            <div class="header" style="margin-top: 10px;">
+                <button class="back-btn" onclick="showScreen('dashboardScreen')">← Back</button>
+                <span>Prayer Tracker</span>
+                <div></div>
+            </div>
+            <div style="font-size: 20px; font-weight: bold; margin: 10px 0; text-align: center; color: #f472b6;">PRAYER TRACKER</div>
+            <div style="width: 100%; overflow-x: auto; margin-bottom: 20px;">
+                <table class="prayer-table">
+                    <thead>
+                        <tr style="color: #60a5fa;">
+                            <th>DAY</th>
+                            <th>FAJR</th>
+                            <th>DUHR</th>
+                            <th>ASR</th>
+                            <th>MAGH</th>
+                            <th>ISHA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prayerTableBody">
+                        <!-- Generated via JS for 30 days -->
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- Sorbomoto (Total Counter) Box -->
-        <div class="total-container">
-            <div class="total-circle" id="totalCountDisplay">0</div>
-            <div class="total-box-label">সর্বমোট: <span id="totalTextNum">0</span></div>
+        <!-- Dua Screen (Matching Screenshot 4 layout) -->
+        <div id="duaScreen" class="screen">
+            <div class="header" style="margin-top: 10px;">
+                <button class="back-btn" onclick="showScreen('dashboardScreen')">← Back</button>
+                <span>Daily Duas</span>
+                <div></div>
+            </div>
+            <div id="duaListContainer" style="width: 100%; overflow-y: auto; padding-bottom: 20px;">
+                <!-- Filled via JS -->
+            </div>
         </div>
+
+        <!-- Daily Deeds Screen (Matching Screenshot 5 layout) -->
+        <div id="deedsScreen" class="screen">
+            <div class="header" style="margin-top: 10px;">
+                <button class="back-btn" onclick="showScreen('dashboardScreen')">← Back</button>
+                <span>Daily Deeds</span>
+                <div></div>
+            </div>
+            <div id="deedsContainer" style="width: 100%; overflow-y: auto; padding-bottom: 20px;">
+                <!-- Filled via JS -->
+            </div>
+        </div>
+
     </div>
 
     <script>
-        let currentCount = 0;
-        let totalCount = 0;
-        let targetLimit = 100;
-        let soundEnabled = true;
-
-        const currentCountElem = document.getElementById('currentCount');
-        const totalCountDisplay = document.getElementById('totalCountDisplay');
-        const totalTextNum = document.getElementById('totalTextNum');
-        const progressRing = document.getElementById('progressRing');
-        const targetSelect = document.getElementById('targetSelect');
-        const zikrSelect = document.getElementById('zikrSelect');
-        const zikrMeaning = document.getElementById('zikrMeaning');
-
-        const radius = 110;
-        const circumference = 2 * Math.PI * radius;
-        progressRing.style.strokeDasharray = circumference;
-
-        function updateDisplay() {
-            currentCountElem.innerText = currentCount;
-            totalCountDisplay.innerText = totalCount;
-            totalTextNum.innerText = totalCount;
-
-            let progress = currentCount / targetLimit;
-            if (progress > 1) progress = 1;
-            let offset = circumference - (progress * circumference);
-            progressRing.style.strokeDashoffset = offset;
+        // Screen Navigation
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
         }
 
-        function incrementCount() {
-            currentCount++;
-            totalCount++;
-            playSound();
+        // Tasbih Logic
+        let tasbihCount = parseInt(localStorage.getItem('tasbih_count')) || 0;
+        document.getElementById('counterVal').innerText = tasbihCount;
 
-            if (currentCount >= targetLimit) {
-                currentCount = 0; 
-            }
-            updateDisplay();
+        function incrementTasbih() {
+            tasbihCount++;
+            document.getElementById('counterVal').innerText = tasbihCount;
+            localStorage.setItem('tasbih_count', tasbihCount);
+            triggerVibrate();
         }
 
-        function resetCounter() {
-            if (confirm("Apni ki current count ebong sorbomoto duitai reset korte chan?")) {
-                currentCount = 0;
-                totalCount = 0;
-                updateDisplay();
-            }
+        function resetTasbih() {
+            tasbihCount = 0;
+            document.getElementById('counterVal').innerText = tasbihCount;
+            localStorage.setItem('tasbih_count', tasbihCount);
         }
 
-        function changeTarget() {
-            let val = targetSelect.value;
-            if (val === 'custom') {
-                let customVal = prompt("Enter custom target number:", "50");
-                if (customVal && !isNaN(customVal)) {
-                    targetLimit = parseInt(customVal);
-                } else {
-                    targetLimit = 100;
-                    targetSelect.value = "100";
-                }
-            } else {
-                targetLimit = parseInt(val);
-            }
-            currentCount = 0;
-            updateDisplay();
+        function triggerVibrate() {
+            if (navigator.vibrate) navigator.vibrate(30);
         }
 
-        function updateZikrText() {
-            zikrMeaning.innerText = zikrSelect.value;
-            currentCount = 0;
-            updateDisplay();
+        // Prayer Tracker Generation (30 Days with checkmarks)
+        const prayerBody = document.getElementById('prayerTableBody');
+        let prayersData = JSON.parse(localStorage.getItem('prayer_tracker')) || {};
+
+        for (let day = 1; day <= 30; day++) {
+            let tr = document.createElement('tr');
+            let prayers = ['fajr', 'duhr', 'asr', 'magh', 'isha'];
+            
+            let html = `<td><b>${day}</b></td>`;
+            prayers.forEach(p => {
+                let isChecked = prayersData[`day_${day}_${p}`] ? 'checked' : '';
+                html += `<td><input type="checkbox" class="prayer-checkbox" ${isChecked} onchange="savePrayer(${day}, '${p}', this.checked)"></td>`;
+            });
+            tr.innerHTML = html;
+            prayerBody.appendChild(tr);
         }
 
-        function playSound() {
-            if (!soundEnabled) return;
-            if (navigator.vibrate) {
-                navigator.vibrate(40);
-            }
+        function savePrayer(day, prayer, status) {
+            prayersData[`day_${day}_${prayer}`] = status;
+            localStorage.setItem('prayer_tracker', JSON.stringify(prayersData));
+            triggerVibrate();
         }
 
-        function toggleSound() {
-            soundEnabled = !soundEnabled;
-            alert(soundEnabled ? "Sound & Vibration Enabled" : "Sound & Vibration Disabled");
-        }
+        // Duas Data (Matching Screenshot 4)
+        const duas = [
+            { num: 1, title: "Before Sleeping", ar: "باسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيا", meaning: "In Your name, O Allah, I die and I live.", source: "Sahih al-Bukhari 6324" },
+            { num: 2, title: "After Waking Up", ar: "الحَمْدُ للهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ", meaning: "All praise is for Allah, who gave us life after causing us to die, and to Him is the resurrection.", source: "Sahih al-Bukhari 6312" },
+            { num: 3, title: "Before Eating", ar: "بِسْمِ اللَّهِ", meaning: "In the name of Allah.", source: "Sunan Abi Dawud 3767; Jami` at-Tirmidhi 1859" },
+            { num: 4, title: "If You Forgot to Say Bismillah at the Beginning of the Meal", ar: "بِسْمِ اللَّهِ أَوَّلَهُ وَآخِرَهُ", meaning: "In the name of Allah at its beginning and at its end.", source: "Sunan Abi Dawud 3767; Jami` at-Tirmidhi 1859" },
+            { num: 5, title: "After Eating", ar: "الحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلاَ قُوَّةٍ", meaning: "All praise is for Allah, who fed me this and provided it for me without any power or strength from me.", source: "Jami` at-Tirmidhi 3458; Sunan Abi Dawud 4023" },
+            { num: 6, title: "Leaving Home", ar: "بِسْمِ اللَّهِ، تَوَكَّلْتُ عَلَى اللَّهِ، وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ", meaning: "In the name of Allah. I place my trust in Allah. There is no power and no strength except through Allah.", source: "Sunan Abi Dawud 5095; Jami` at-Tirmidhi 3426" },
+            { num: 7, title: "Entering Home", ar: "بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا", meaning: "In the name of Allah we enter, and in the name of Allah we leave, and upon our Lord Allah we rely.", source: "Sunan Abi Dawud 5096" },
+            { num: 8, title: "Before Entering the Toilet", ar: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ", meaning: "O Allah, I seek refuge in You from the male and female devils.", source: "Sahih al-Bukhari 142; Sahih Muslim 375" },
+            { num: 9, title: "After Leaving the Toilet", ar: "غُفْرَانَكَ", meaning: "I seek Your forgiveness.", source: "Sunan Abi Dawud 30; Jami` at-Tirmidhi 17" },
+            { num: 10, title: "When Wearing New Clothes", ar: "الحَمْدُ لِلَّهِ الَّذِي كساني هَذَا الثَّوْبَ وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلاَ قُوَّةٍ", meaning: "All praise is for Allah who clothed me with this garment and provided it for me without any power or strength from me.", source: "Sunan Abi Dawud 4023; Jami` at-Tirmidhi 3560" },
+            { num: 11, title: "When It Rains", ar: "اللَّهُمَّ صَيِّباً نَافِعاً", meaning: "O Allah, make it beneficial rain.", source: "Sahih al-Bukhari 1032" },
+            { num: 12, title: "When Travelling", ar: "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنقَلِبُونَ", meaning: "Glory be to Him who has subjected this to us, and we could not have done so ourselves. And surely, to our Lord we will return.", source: "Qur'an 43:13-14" }
+        ];
 
-        function openSettings() {
-            let action = prompt("Type 'resetall' to clear counts.");
-            if (action === 'resetall') {
-                totalCount = 0;
-                currentCount = 0;
-                updateDisplay();
-            }
-        }
+        const duaContainer = document.getElementById('duaListContainer');
+        duas.forEach((d) => {
+            duaContainer.innerHTML += `
+                <div class="content-box">
+                    <div style="font-size:12px; color:#60a5fa; font-weight:bold; margin-bottom:4px;">${d.num}. ${d.title}</div>
+                    <div class="arabic-text">${d.ar}</div>
+                    <div class="english-meaning">"${d.meaning}"</div>
+                    <div class="source-text">Source: ${d.source}</div>
+                </div>
+            `;
+        });
 
-        updateDisplay();
+        // Daily Deeds Data (Matching Screenshot 5)
+        const deeds = [
+            { icon: "🤝", title: "Help Someone", desc: "Try to help someone today." },
+            { icon: "💖", title: "Give Charity", desc: "Give something to someone in need." },
+            { icon: "😊", title: "Be Kind to Others", desc: "Treat people with kindness." },
+            { icon: "👨‍👩‍👧", title: "Help Your Parents", desc: "Do something helpful for your parents." },
+            { icon: "💬", title: "Speak Good Words", desc: "Speak kindly and avoid hurting others." },
+            { icon: "❤️", title: "Avoid Hurting Others", desc: "Be careful with your words and actions." },
+            { icon: "🌿", title: "Personal Reminders", desc: "Keep your heart clean and focused." },
+            { icon: "🧘", title: "Control Your Anger", desc: "Stay calm in difficult situations." },
+            { icon: "🗣️", title: "Avoid Backbiting", desc: "Protect your tongue from speaking ill of others." },
+            { icon: "🛡️", title: "Avoid Bad Words", desc: "Use clean and respectful language." },
+            { icon: "🧘‍♂️", title: "Practice Patience", desc: "Have sabr during trials and tests." },
+            { icon: "🤲", title: "Remember", desc: "Keep remembrance of Allah in your heart." }
+        ];
+
+        const deedsContainer = document.getElementById('deedsContainer');
+        deeds.forEach(item => {
+            deedsContainer.innerHTML += `
+                <div class="content-box" style="display:flex; align-items:center; gap:14px;">
+                    <div style="font-size:26px;">${item.icon}</div>
+                    <div>
+                        <div style="font-size:15px; font-weight:bold; color:#fff;">${item.title}</div>
+                        <div style="font-size:12px; color:rgba(255,255,255,0.7);">${item.desc}</div>
+                    </div>
+                </div>
+            `;
+        });
     </script>
 </body>
 </html>
